@@ -19,3 +19,5 @@
 
 made in python 🐍
 
+
+[![](https://visitcount.itsvg.in/api?id=solidsman&icon=1&color=4)](https://visitcount.itsvg.in)
