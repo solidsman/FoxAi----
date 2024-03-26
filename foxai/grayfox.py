@@ -12,7 +12,7 @@ from discord.utils import get
 try:
     from dotenv import load_dotenv
 except ModuleNotFoundError:
-    os.system("pip install dotenv")
+    os.system("pip install python-dotenv")
 
 #matplotlib module
 try:
@@ -380,7 +380,7 @@ async def blacklist_add(context, *, word):
         with open("words_blacklist.txt", "a") as f:
             f.write(word+"\n")
     except Exception:
-        print("Unknow error occurred....!")
+        print("Unknow Error....!")
 
     await context.send(f'Word "{word}" added to blacklist.')
 
