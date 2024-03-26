@@ -1,14 +1,30 @@
-import discord
+import os
+
+#Discord module
+try:
+    import discord
+except ModuleNotFoundError:
+    os.system("pip install discord")
 from discord.ext import tasks, commands
-from requests import get
 from discord.utils import get
-from dotenv import load_dotenv
+
+#dotenv module
+try:
+    from dotenv import load_dotenv
+except ModuleNotFoundError:
+    os.system("pip install dotenv")
+
+#matplotlib module
+try:
+    import matplotlib.pyplot as plt
+except ModuleNotFoundError:
+    os.system("pip install matplotlib")
+
+#inbuild modules
+from collections import defaultdict
 import asyncio
 import requests
 import io
-import matplotlib.pyplot as plt
-from collections import defaultdict
-
 
 #For a more secure, we loaded the .env file and assign the token value to a variable 
 load_dotenv(".env")
@@ -268,9 +284,12 @@ async def on_message(message):
         print("This is a command")
         await bot.process_commands(message)
     else:
-        with open("words_blacklist.txt") as bf:
-            blacklist = [word.strip().lower() for word in bf.readlines()]
-        bf.close()
+        try:
+            with open("words_blacklist.txt", "r") as bf:
+                blacklist = [word.strip().lower() for word in bf.readlines()]
+        except Exception:
+            blacklist = []
+            print(print("File not Found....!"))
 
         channel = message.channel
         for word in blacklist:
@@ -357,9 +376,11 @@ async def softban(context, member : discord.Member, days, reason=None):
 @bot.command()
 @commands.has_permissions(ban_members=True)
 async def blacklist_add(context, *, word):
-    with open("words_blacklist.txt", "a") as f:
-        f.write(word+"\n")
-    f.close()
+    try:
+        with open("words_blacklist.txt", "a") as f:
+            f.write(word+"\n")
+    except Exception:
+        print("Unknow error occurred....!")
 
     await context.send(f'Word "{word}" added to blacklist.')
 
@@ -368,8 +389,3 @@ try:
     bot.run(TOKEN)
 except Exception as e:
     print(f"An error occurred: {e}")
-
-
-
-
-
